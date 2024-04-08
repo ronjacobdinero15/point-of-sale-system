@@ -72,15 +72,27 @@ export function copyItems() {
 }
 
 const cards = document.querySelector('.cards')
-
 cards.addEventListener('click', function (event) {
   const target = event.target
+  const span = target.closest('.card').querySelector('#quantity')
+  const spanVal = parseInt(span.textContent)
+
+  if (target.classList.contains('btn-increase')) {
+    if (spanVal > 999) return
+    let output = spanVal + 1
+    span.textContent = output
+    return
+  } else if (target.classList.contains('btn-decrease')) {
+    if (spanVal <= 0) return
+    let output = spanVal - 1
+    span.textContent = output
+    return
+  }
   if (!target.classList.contains('btn-order')) return
 
-  const input = target.closest('.card').querySelector('input')
-  if (input.value <= 0) return alert('Quantity must be at least 1')
+  if (spanVal <= 0) return alert('Quantity must be at least 1')
 
-  const quantity = parseFloat(input.value)
+  const quantity = parseFloat(spanVal)
   const item = target.getAttribute('data-item')
   const cost = parseFloat(target.getAttribute('data-cost'))
 
@@ -88,7 +100,7 @@ cards.addEventListener('click', function (event) {
   updateItems(item, cost, quantity)
   updateTotal()
 
-  input.value = ''
+  span.textContent = 0
 })
 
 function updateItems(itemName, cost, quantity) {
@@ -184,22 +196,23 @@ function displaySearchResults(results) {
               
               <div class="card-description">
                 <p class="card-text">$${item.cost}</p>
-                <input
-                  type="number"
-                  placeholder="Enter how many"
-                  class="form-control"
-                  min="0"
-                  max="1500"
-                />
+
                 <div class="btn-container">
-                  <button
-                    class="btn btn-primary btn-order"
-                    data-item='${item.item}'
-                    data-cost=${item.cost}
-                  >
-                    Add to order
-                  </button>
-                </div
+                  <div class="quantity-container">
+                    <button class="btn btn-decrease">&minus;</button>
+                    <span id="quantity">0</span>
+                    <button class="btn btn-increase">&plus;</button>
+                  </div>
+                  <div class="order-container cart-container">
+                    <button
+                      class="btn btn-primary btn-order"
+                      data-item='${item.item}'
+                      data-cost=${item.cost}
+                    >
+                      Add to order
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>`
@@ -304,4 +317,20 @@ printer.addEventListener('click', () => {
   }
 
   printReceipt()
+})
+
+const btnAdd = document.getElementById('btn-increase')
+btnAdd.addEventListener('click', e => {
+  const qtyVal = parseInt(span.textContent)
+  let add = qty + 1
+  qtyVal.textContent = add
+})
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('remove')) {
+    const container = e.target.closest('.selectionContainer')
+    if (container) {
+      container.remove()
+    }
+  }
 })

@@ -37,6 +37,7 @@ main {
 .card-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 10px;
   background-color: #059862;
   color: white;
@@ -45,8 +46,6 @@ main {
   position: relative;
 }
 .card-header #searchInput {
-  flex-basis: 250px;
-  min-width: 70px;
   height: auto;
   padding-left: 33px;
 }
@@ -73,12 +72,51 @@ main {
 }
 .btn-container {
   display: flex;
-  justify-content: end;
+  flex-direction: column;
+  align-items: end;
   margin-top: 15px;
+  gap: 15px;
+}
+.btn-container .quantity-container,
+.btn-container .order-container {
+  width: 120px !important;
+}
+.btn-container .order-container .btn-order {
+  width: 100%;
+}
+.btn-container .quantity-container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+}
+.btn-container .quantity-container #quantity {
+  font-size: 1.5rem;
+  text-align: center;
+  border-top: 1px solid #d2d2d2;
+  border-bottom: 1px solid #d2d2d2;
+}
+.btn-container .quantity-container button {
+  background-color: #d2d2d2;
+  color: white;
+}
+.btn-container .quantity-container button:hover {
+  background-color: #059862;
+  color: white;
+}
+.btn-container .quantity-container button:active {
+  background-color: #059862 !important;
+  color: white !important;
+}
+.btn-container .quantity-container .btn-decrease {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.btn-container .quantity-container .btn-increase {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 /* ORDER PANEL */
 .order {
-  height: 90vh;
+  height: 92vh;
   display: flex;
   justify-content: space-between;
 }
@@ -118,8 +156,14 @@ main {
   border: none;
   padding: 0;
 }
-.final-btn {
+.order-container {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  margin-top: 15px;
+}
+.cart-container {
+  margin-top: 0;
 }
 .printer-img {
   width: 30px;
@@ -135,6 +179,10 @@ main {
   .cards {
     grid-template-columns: repeat(1, 1fr);
   }
+  .btn-container .quantity-container,
+  .btn-container .order-container {
+    width: 100% !important;
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   body {
@@ -145,5 +193,9 @@ main {
   }
   .cards {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .btn-container .quantity-container,
+  .btn-container .order-container {
+    width: 100% !important;
   }
 }
